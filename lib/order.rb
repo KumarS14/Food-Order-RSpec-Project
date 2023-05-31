@@ -7,9 +7,6 @@ class Order
         raise 'This item does not exist' unless @menu.has_key?(item.to_sym)
         @order[item] = @menu.fetch(item.to_sym)
     end
-    def remove_order(item)
-        @order.delete(item)
-    end
     def current_order
         return @order
     end
