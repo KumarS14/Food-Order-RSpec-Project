@@ -14,4 +14,10 @@ RSpec.describe Order do
         allow(mock_order).to receive(:menu).and_return(test_menu)
         expect(order = Order.new(mock_order)).to be_instance_of(Order)
     end
+    it 'Should mock menu going into order' do
+        mock_order = double(:the_menu)
+        allow(mock_order).to receive(:menu).and_return(test_menu)
+        order = Order.new(mock_order)
+        expect{order.place_order("fish")}.to raise_error("This item does not exist")
+    end
 end
