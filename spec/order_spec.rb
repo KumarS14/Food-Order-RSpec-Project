@@ -35,4 +35,14 @@ RSpec.describe Order do
         order.place_order("pizza")
        expect(order.current_order).to eq({"chips"=>2.99, "pizza"=>3.99})
     end
+    it 'Should mock user ordering three items but removing one item from the order' do
+        mock_order = double(:the_menu)
+        allow(mock_order).to receive(:menu).and_return(mock_menu)
+        order = Order.new(mock_order)
+        order.place_order("chips")
+        order.place_order("pizza")
+        order.place_order("steak")
+        order.delete_item("pizza")
+       expect(order.current_order).to eq({"chips"=>2.99, "steak" => 11.99,})
+    end
 end
