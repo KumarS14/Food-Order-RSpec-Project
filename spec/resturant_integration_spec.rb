@@ -61,6 +61,18 @@ RSpec.describe 'Integration' do
         expect(receipt = Receipt.new(item_order)).to be_instance_of(Receipt)
 
     end
+    it ' order reciept should take a instance of order' do
+        the_menu = Menu.new
+        item_order = Order.new(the_menu)
+        item_order.place_order("chips")
+        item_order.place_order("burger")
+        item_order.place_order("pizza")
+        item_order.place_order("steak")
+        item_order.delete_item("pizza")
+        receipt = Receipt.new(item_order)
+        expect(receipt.total).to include("You have orderd burger for $5.99")
+        expect(receipt.total).to include("Thank you for your time please come back again soon.")
+    end
      
      
     
