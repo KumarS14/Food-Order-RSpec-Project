@@ -16,23 +16,29 @@ RSpec.describe 'Integration' do
         the_menu = Menu.new
         item_order = Order.new(the_menu)
          item_order.place_order("chips")
-         expect(item_order.current_order).to eq(["chips for: 2.99"])
+         expect(item_order.current_order).to eq("chips" => 2.99,)
       end
       it 'should allow the user to order a item' do
         the_menu = Menu.new
         item_order = Order.new(the_menu)
          item_order.place_order("chips")
          item_order.place_order("burger")
-         expect(item_order.current_order).to eq( ["chips for: 2.99", "burger for: 5.99"])
+         item_order.place_order("pizza")
+         expect(item_order.current_order).to include("burger")
+         expect(item_order.current_order).to include("chips")
+         expect(item_order.current_order).to include("pizza")
       end
-      it 'should allow the user to order 3 items' do
+      it 'should allow the user to order two valid items but not the third as that is not on the menu' do
         the_menu = Menu.new
         item_order = Order.new(the_menu)
          item_order.place_order("chips")
          item_order.place_order("burger")
          expect { item_order.place_order("biscuit") }.to raise_error('This item does not exist')
-         expect(item_order.current_order).to eq( ["chips for: 2.99", "burger for: 5.99"])
+         expect(item_order.current_order).to include("chips")
+         expect(item_order.current_order).to include("burger")
       end
+     
+     
     
  
 end
