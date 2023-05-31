@@ -25,6 +25,14 @@ RSpec.describe 'Integration' do
          item_order.place_order("burger")
          expect(item_order.current_order).to eq( ["chips for: 2.99", "burger for: 5.99"])
       end
+      it 'should allow the user to order 3 items' do
+        the_menu = Menu.new
+        item_order = Order.new(the_menu)
+         item_order.place_order("chips")
+         item_order.place_order("burger")
+         item_order.place_order("pizza")
+         expect(item_order.current_order).to eq( ["chips for: 2.99", "burger for: 5.99", "pizza for: 3.99"])
+      end
     
  
 end
