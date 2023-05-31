@@ -20,11 +20,19 @@ RSpec.describe Order do
         order = Order.new(mock_order)
         expect{order.place_order("fish")}.to raise_error("This item does not exist")
     end
-    it 'Should mock menu going into order' do
+    it 'Should mock user ordering a item' do
         mock_order = double(:the_menu)
         allow(mock_order).to receive(:menu).and_return(mock_menu)
         order = Order.new(mock_order)
         order.place_order("chips")
        expect(order.current_order).to eq("chips" => 2.99,)
+    end
+    it 'Should mock user ordering two items' do
+        mock_order = double(:the_menu)
+        allow(mock_order).to receive(:menu).and_return(mock_menu)
+        order = Order.new(mock_order)
+        order.place_order("chips")
+        order.place_order("pizza")
+       expect(order.current_order).to eq({"chips"=>2.99, "pizza"=>3.99})
     end
 end
